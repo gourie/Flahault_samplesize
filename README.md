@@ -1,16 +1,16 @@
 # Introduction 
 Validation studies are used to evaluate machine learning models in an external, previously unseen data set to assess the 
 diagnostic performance of the model. Most of the time, the validation sets are defined properly, e.g. by sampling data with enough 
-variability in terms of known factors and the right metrics (tailored to the problem, with 95% CI) are applied and if applicable, assessed for statistical significance across different groups.
+variability in terms of known factors and by applying the appropriate metrics (tailored to the problem, including 95% CI) are applied and if applicable, assessed for statistical significance across different groups.
 
 
 But one key question that needs to be answered is the following: **how precise are the sensitivity/specificity/... results that 
 you are producing?** Said differently, how likely are these results to occur due to chance or are you truly measuring a 'real
-effect', i.e., a result that would be achieved in the population. 
+effect', i.e., a result that would be achieved in the population? 
 Answering this question brings us back to good-old statistics of power analysis and in this repository I have created Python code
 for the sample size estimation of proportions (which can thus be applied to e.g. sensitivity and specifity) from the 
 [paper](https://www.sciencedirect.com/science/article/pii/S0895435605000892) "Sample size calculation should be performed for design accuracy in diagnostic test studies 
-by Flahault et al. in Clin.Epid 2005.
+by Flahault et al. in Clinical Epidemiology 2005.
 
 # Sample size estimation for validation studies
 Power analysis allows you to determine the required sample size to estimate a certain outcome with a given precision. 
@@ -20,24 +20,24 @@ measuring outcome A in two groups (case vs. control) and the effect size is the 
 both groups. If the effect size is expected to big (this is an input from the subject matter expert), you can 
 imagine that not that much data (sample size N) are needed to confirm that both groups are different by this wide
 margin. If on the other hand, the expected effect size is small (again, expert input), for a small N this difference 
-between both groups could have also occurred by chance. Because for all (references?) distributions (of a given outcome), 
+between both groups could have also occurred by chance. Because for all (*TODO: add references*) distributions (of a given outcome), 
 variance decreases with N, increasing the sample size will make sure that you can measure even a small difference in 
-effect size between two groups. Of course, more data/bigger sample costs more time and money hence you'd want to 
-compute the minimal sample size that would allow you to measure a outcome with a certain precision (e.g., being 
-95% certain that the measured outcome is a true effect not occurring by chance).
+effect size between two groups. Of course, more data/bigger sample sizes imply that you need more time and money to build them, hence you'd want to 
+compute the minimal sample size that would allow you to measure an outcome with a certain precision (e.g., being 
+95% certain that the measured outcome is a true effect as that outcome would have been very unlikely to occur by chance).
  
-In essence, this power analysis entails computing a (one-sided) hypothesis test to evaluate whether 95% (the power) of the samples 
-from the expected (binomial) distribution are within the 5% (alpha, statistical significance level) quartile of the lower limit
-(binomial) distribution. If this is the case, the null hypothesis (proportion=lower limit) can be rejected
+In essence, this power analysis entails computing a (one-sided) hypothesis test to evaluate whether 95% (the **power** of the test) of the samples 
+from the expected (binomial) distribution are within the 5% (alpha, the statistical significance level) quartile of the lower limit
+(binomial) distribution. If this is the case, the null hypothesis (H_0: proportion=lower limit) can be rejected
 and we accept the alternative hypothesis (i.e., the measured proportion is >lower limit with 95% probability).
 
-In this repository, I have created the Python code using the scipy.stats module for estimating the sample size after 
-providing inputs of the lower limit proportion, expected proportion, alpha (significance level for the hypothesis test), beta (1 - statistical power)
+In this repository, I have created some Python code for estimating the sample size using a command line interface (CLI). The user can input
+the lower limit proportion, expected proportion, alpha (significance level for the hypothesis test), beta (1 - statistical power)
 and the range of sample sizes to evaluate (defined using start, end and step).
-One can reproduce table1 from the paper or compute their own sample size estimates given other input values (the paper only 
+One can reproduce table 1 from the Flahault et al. paper or compute their own sample size estimates given other input values (the paper only 
 used alpha=beta=0.05 and the expected proportion ranging from 0.6 to 0.95 in steps of 0.05).
 
-![Table 1 taken from Flahault et al., Clin.Epid 2005](./table1.png)
+![Table 1 taken from Flahault et al., Clin Epidemiol 2005](./table1.png)
 
 # How to use it?
 1. Setup a python 3.x environment with scipy package installed
